@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heraclitus: The River of Change</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        body {
+            background: #000;
+            font-family: 'VT323', monospace;
+            color: #fff;
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .pixel {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: white;
+            opacity: 0.6;
+            z-index: 1;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .container {
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+            padding: 10px;
+        }
+
+        h1 {
+            font-size: clamp(32px, 6vw, 48px);
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #fff;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: clamp(18px, 3vw, 24px);
+            margin-bottom: 10px;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .info {
+            font-size: clamp(16px, 2.5vw, 20px);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #ccc;
+            opacity: 0.9;
+        }
+
+        .river-id {
+            font-size: clamp(14px, 2.5vw, 20px);
+            color: #888;
+            margin-bottom: 15px;
+            font-family: monospace;
+            letter-spacing: 1px;
+            word-break: break-all;
+        }
+
+        .river-scene {
+            position: relative;
+            width: 100%;
+            height: clamp(150px, 30vw, 200px);
+            margin-bottom: 30px;
+        }
+
+        .river-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: #000;
+            border: 2px solid #fff;
+            overflow: hidden;
+        }
+
+        .river-wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: repeating-linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.05) 0px,
+                    rgba(255, 255, 255, 0.15) 20px,
+                    rgba(255, 255, 255, 0.05) 40px);
+            animation: flow 8s linear infinite;
+        }
+
+        @keyframes flow {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .person {
+            position: absolute;
+            left: 50%;
+            bottom: 60%;
+            transform: translateX(-50%);
+            font-size: clamp(30px, 8vw, 50px);
+            z-index: 10;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            transition: bottom 0.5s ease-in-out;
+        }
+
+        .person.in-river {
+            bottom: 20%;
+        }
+
+        .water-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: flowParticle 6s linear infinite;
+        }
+
+        @keyframes flowParticle {
+            0% {
+                left: -5%;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 105%;
+                opacity: 0;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            position: relative;
+            cursor: pointer;
+            padding: clamp(15px, 2vw, 20px) clamp(25px, 4vw, 40px);
+            text-align: center;
+            display: inline-flex;
+            justify-content: center;
+            font-size: clamp(18px, 2.5vw, 24px);
+            text-transform: uppercase;
+            color: #fff;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+            font-family: 'VT323', monospace;
+            background: transparent;
+            border: none;
+            overflow: hidden;
+            outline-offset: 4px;
+            letter-spacing: 2px;
+        }
+
+        .button:focus {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+
+        .button-text {
+            position: relative;
+            z-index: 20;
+            white-space: nowrap;
+        }
+
+        .button-shine {
+            position: absolute;
+            left: -75%;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(12deg);
+            z-index: 10;
+            filter: blur(20px);
+            transition: all 1s ease-in-out;
+        }
+
+        .button:hover .button-shine {
+            left: 125%;
+        }
+
+        .button-border-tl {
+            width: 50%;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            transition: all 0.3s;
+            display: block;
+            border-left: 2px solid #fff;
+            border-top: 2px solid #fff;
+            position: absolute;
+            height: 20%;
+            border-top-left-radius: 8px;
+            top: 0;
+            left: 0;
+        }
+
+        .button-border-tr {
+            width: 50%;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            transition: all 0.3s;
+            display: block;
+            border-right: 2px solid #fff;
+            border-top: 2px solid #fff;
+            position: absolute;
+            height: 60%;
+            border-top-right-radius: 8px;
+            top: 0;
+            right: 0;
+        }
+
+        .button:hover .button-border-tr {
+            height: 90%;
+        }
+
+        .button-border-bl {
+            width: 50%;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            transition: all 0.3s;
+            display: block;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            position: absolute;
+            height: 60%;
+            border-bottom-left-radius: 8px;
+            left: 0;
+            bottom: 0;
+        }
+
+        .button:hover .button-border-bl {
+            height: 90%;
+        }
+
+        .button-border-br {
+            width: 50%;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            transition: all 0.3s;
+            display: block;
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            position: absolute;
+            height: 20%;
+            border-bottom-right-radius: 8px;
+            right: 0;
+            bottom: 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            font-size: clamp(18px, 2.5vw, 24px);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: clamp(24px, 4vw, 36px);
+            color: #fff;
+            text-shadow: 0 0 10px #fff;
+            margin-top: 5px;
+        }
+
+        .philosophy {
+            margin-top: 30px;
+            font-size: clamp(14px, 2vw, 18px);
+            font-style: italic;
+            color: #666;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            padding: 0 10px;
+        }
+
+        @keyframes fade {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .changed {
+            animation: fade 1s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                margin-bottom: 10px;
+            }
+
+            .river-scene {
+                margin-bottom: 20px;
+            }
+
+            .stats {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .button {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>HERACLITUS</h1>
+        <div class="subtitle">PANTA RHEI</div>
+        <div class="info">
+            You cannot step into the same river twice.<br>
+            The river flows, the water changes, and so do you.
+        </div>
+
+        <div class="river-id" id="riverId">RIVER ID: WAITING...</div>
+
+        <div class="river-scene">
+            <div class="person" id="person">🧍</div>
+            <div class="river-container">
+                <div class="river-wave"></div>
+                <div class="water-particles" id="particles"></div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="button" id="stepBtn">
+                <span class="button-text">STEP IN RIVER</span>
+                <span class="button-shine"></span>
+                <span class="button-border-tl"></span>
+                <span class="button-border-tr"></span>
+                <span class="button-border-bl"></span>
+                <span class="button-border-br"></span>
+            </button>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div>STEPS TAKEN</div>
+                <div class="stat-value" id="steps">0</div>
+            </div>
+            <div class="stat">
+                <div>WATER CHANGED</div>
+                <div class="stat-value" id="waterChanged">NO</div>
+            </div>
+            <div class="stat">
+                <div>YOU CHANGED</div>
+                <div class="stat-value" id="youChanged">NO</div>
+            </div>
+        </div>
+
+        <div class="philosophy">
+            "Everything flows, nothing stands still."<br>
+            - Heraclitus of Ephesus (c. 535-475 BCE)
+        </div>
+    </div>
+
+    <script>
+        const stepBtn = document.getElementById('stepBtn');
+        const stepsEl = document.getElementById('steps');
+        const waterChangedEl = document.getElementById('waterChanged');
+        const youChangedEl = document.getElementById('youChanged');
+        const riverIdEl = document.getElementById('riverId');
+        const particlesContainer = document.getElementById('particles');
+        const person = document.getElementById('person');
+
+        let steps = 0;
+        let inRiver = false;
+
+        function createStars() {
+            const starCount = window.innerWidth < 768 ? 50 : 100;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'pixel';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(star);
+            }
+        }
+
+        function createWaterParticles() {
+            const particleCount = window.innerWidth < 768 ? 15 : 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function generateRiverId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let id = '';
+            for (let i = 0; i < 12; i++) {
+                id += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return id;
+        }
+
+        function stepInRiver() {
+            steps++;
+
+            if (!inRiver) {
+                person.classList.add('in-river');
+                inRiver = true;
+            } else {
+                person.classList.remove('in-river');
+                setTimeout(() => {
+                    person.classList.add('in-river');
+                }, 100);
+            }
+
+            const currentRiverId = generateRiverId();
+
+            stepsEl.textContent = steps;
+            riverIdEl.textContent = 'RIVER ID: ' + currentRiverId;
+            riverIdEl.classList.add('changed');
+            setTimeout(() => riverIdEl.classList.remove('changed'), 1000);
+
+            if (steps === 1) {
+                stepBtn.querySelector('.button-text').textContent = 'STEP IN AGAIN';
+            }
+
+            if (steps >= 2) {
+                waterChangedEl.textContent = 'YES';
+                youChangedEl.textContent = 'YES';
+                waterChangedEl.classList.add('changed');
+                youChangedEl.classList.add('changed');
+                setTimeout(() => {
+                    waterChangedEl.classList.remove('changed');
+                    youChangedEl.classList.remove('changed');
+                }, 1000);
+            }
+        }
+
+        stepBtn.addEventListener('click', stepInRiver);
+
+        createStars();
+        createWaterParticles();
+    </script>
+
+</body>
+
+</html>
